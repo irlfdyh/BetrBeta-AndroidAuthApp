@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "579096344936",
+    "project_id": "betr-beta-test-app",
+    "storage_bucket": "betr-beta-test-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:579096344936:android:0ad67da7b31952bdac7edd",
+        "android_client_info": {
+          "package_name": "com.betr.android.auth"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAX9bjo8eNE2aUDA1ludUiRJoVBGKKz4jE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
