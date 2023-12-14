@@ -1,4 +1,4 @@
-package com.betr.android.auth
+package com.betr.android.auth.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
