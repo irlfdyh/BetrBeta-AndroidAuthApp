@@ -14,7 +14,7 @@
       },
       "oauth_client": [
         {
-          "client_id": "579096344936-iqechaage11831irr2gt46ffnbq2ha4c.apps.googleusercontent.com",
+          "client_id": "579096344936-qhkglgvob1h61rd0v78lik2iu50jqcut.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.betr.android.auth",
@@ -22,7 +22,7 @@
           }
         },
         {
-          "client_id": "579096344936-m6d135klsgsgk59cb5pmcupigfberdga.apps.googleusercontent.com",
+          "client_id": "579096344936-fkm0fb5mqjvj0mucfvao5ratl6725i6d.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -35,7 +35,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "579096344936-m6d135klsgsgk59cb5pmcupigfberdga.apps.googleusercontent.com",
+              "client_id": "579096344936-fkm0fb5mqjvj0mucfvao5ratl6725i6d.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
