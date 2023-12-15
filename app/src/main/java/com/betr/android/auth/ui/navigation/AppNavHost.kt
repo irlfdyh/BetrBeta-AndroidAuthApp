@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
+import com.betr.android.auth.ui.feature.home.HomeScreen
 import com.betr.android.auth.ui.feature.login.LoginScreen
 import com.betr.android.auth.ui.feature.register.RegisterScreen
 import com.betr.android.auth.util.ROUTE_HOME
@@ -59,7 +60,7 @@ fun AppNavHost(
                         route = ROUTE_HOME,
                         navOptions = navOptions {
                             popUpTo(
-                                route = ROUTE_LOGIN
+                                route = ROUTE_REGISTER
                             ) {
                                 inclusive = true
                             }
@@ -75,7 +76,21 @@ fun AppNavHost(
         composable(
             route = ROUTE_HOME
         ) {
-
+            HomeScreen(
+                auth = firebaseAuth,
+                onNavigateToLogin = {
+                    navController.navigate(
+                        route = ROUTE_LOGIN,
+                        navOptions = navOptions {
+                            popUpTo(
+                                route = ROUTE_HOME
+                            ) {
+                                inclusive = true
+                            }
+                        }
+                    )
+                }
+            )
         }
 
     }
