@@ -5,7 +5,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navOptions
 import com.betr.android.auth.ui.feature.login.LoginScreen
+import com.betr.android.auth.ui.feature.register.RegisterScreen
 import com.betr.android.auth.util.ROUTE_HOME
 import com.betr.android.auth.util.ROUTE_LOGIN
 import com.betr.android.auth.util.ROUTE_REGISTER
@@ -29,15 +31,45 @@ fun AppNavHost(
         ) {
             LoginScreen(
                 auth = firebaseAuth,
-                onNavigateToRegister = { },
-                onNavigateToHome = { }
+                onNavigateToRegister = {
+                    navController.navigate(route = ROUTE_REGISTER)
+                },
+                onNavigateToHome = {
+                    navController.navigate(
+                        route = ROUTE_HOME,
+                        navOptions = navOptions {
+                            popUpTo(
+                                route = ROUTE_LOGIN
+                            ) {
+                                inclusive = true
+                            }
+                        }
+                    )
+                }
             )
         }
 
         composable(
             route = ROUTE_REGISTER
         ) {
-
+            RegisterScreen(
+                auth = firebaseAuth,
+                onNavigateToHome = {
+                    navController.navigate(
+                        route = ROUTE_HOME,
+                        navOptions = navOptions {
+                            popUpTo(
+                                route = ROUTE_LOGIN
+                            ) {
+                                inclusive = true
+                            }
+                        }
+                    )
+                },
+                onNavigateToLogin = {
+                    navController.navigateUp()
+                }
+            )
         }
 
         composable(

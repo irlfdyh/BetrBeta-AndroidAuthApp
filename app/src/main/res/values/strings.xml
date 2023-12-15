@@ -6,4 +6,7 @@
     <string name="str_google">Google</string>
     <string name="str_msg_register">Don\'t have an account?</string>
     <string name="str_register_here">Register Here</string>
+    <string name="str_register">Register</string>
+    <string name="str_login_here">Login Here</string>
+    <string name="str_msg_login">Already have an account?</string>
 </resources>
