@@ -36,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.betr.android.auth.R
 import com.betr.android.auth.entity.AuthRequest
+import com.betr.android.auth.ui.MainUiState
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -47,15 +48,15 @@ fun LoginScreen(
     onNavigateToHome: () -> Unit = { },
 ) {
 
-    val loginUiState by remember { mutableStateOf(LoginUiState()) }
+    val mainUiState by remember { mutableStateOf(MainUiState()) }
     val context = LocalContext.current
 
     LoginScreenUi(
-        state = loginUiState,
+        state = mainUiState,
         onLoginAction = {
             loginWithEmailAndPassword(
                 auth = auth,
-                request = loginUiState.buildAuthRequest()
+                request = mainUiState.buildAuthRequest()
             ) { result ->
                 if (result.isSuccessful) {
                     onNavigateToHome()
@@ -77,7 +78,7 @@ fun LoginScreen(
 
 @Composable
 private fun LoginScreenUi(
-    state: LoginUiState,
+    state: MainUiState,
     onLoginAction: () -> Unit = { },
     onGoogleLoginAction: () -> Unit = { },
     onRegisterAction: () -> Unit = { },
@@ -198,5 +199,5 @@ private fun loginWithEmailAndPassword(
 @Preview(showSystemUi = true)
 @Composable
 private fun LoginScreenUiPreview() {
-    LoginScreenUi(LoginUiState())
+    LoginScreenUi(MainUiState())
 }

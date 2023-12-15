@@ -36,7 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.betr.android.auth.R
 import com.betr.android.auth.entity.AuthRequest
-import com.betr.android.auth.ui.feature.login.LoginUiState
+import com.betr.android.auth.ui.MainUiState
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -48,7 +48,7 @@ fun RegisterScreen(
     onNavigateToLogin: () -> Unit = { }
 ) {
 
-    val uiState by remember { mutableStateOf(LoginUiState()) }
+    val uiState by remember { mutableStateOf(MainUiState()) }
     val context = LocalContext.current
 
     RegisterUi(
@@ -76,7 +76,7 @@ fun RegisterScreen(
 
 @Composable
 private fun RegisterUi(
-    state: LoginUiState,
+    state: MainUiState,
     onLoginAction: () -> Unit = { },
     onRegisterAction: () -> Unit = { },
 ) {
@@ -174,7 +174,7 @@ private fun RegisterUi(
 @Preview(showSystemUi = true)
 @Composable
 private fun RegisterUiPreview() {
-    RegisterUi(state = LoginUiState())
+    RegisterUi(state = MainUiState())
 }
 
 private fun registerWithEmailAndPassword(

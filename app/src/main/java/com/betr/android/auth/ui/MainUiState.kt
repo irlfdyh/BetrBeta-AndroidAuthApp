@@ -1,11 +1,11 @@
-package com.betr.android.auth.ui.feature.login
+package com.betr.android.auth.ui
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.betr.android.auth.entity.AuthRequest
 
-class LoginUiState {
+class MainUiState {
 
     private var _email by mutableStateOf("")
     val email get() = _email
