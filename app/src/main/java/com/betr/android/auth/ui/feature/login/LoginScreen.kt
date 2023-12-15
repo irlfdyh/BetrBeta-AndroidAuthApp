@@ -62,7 +62,7 @@ fun LoginScreen(
                 } else {
                     Toast.makeText(
                         context,
-                        "Authentication failed.",
+                        result.exception?.message ?: "Register Failed",
                         Toast.LENGTH_SHORT,
                     ).show()
 
@@ -141,9 +141,9 @@ private fun LoginScreenUi(
                 }
             },
             visualTransformation = if (state.showPassword) {
-                PasswordVisualTransformation()
-            } else {
                 VisualTransformation.None
+            } else {
+                PasswordVisualTransformation()
             }
         )
         Spacer(modifier = Modifier.height(16.dp))
