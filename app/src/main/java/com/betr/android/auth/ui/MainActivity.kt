@@ -11,36 +11,26 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.betr.android.auth.ui.theme.BetrBetaAndroidAuthTheme
+import com.betr.android.auth.util.ROUTE_HOME
+import com.betr.android.auth.util.ROUTE_LOGIN
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val firebaseAuth = FirebaseAuth.getInstance()
+        val currentUser = firebaseAuth.currentUser
+        val startDestination = if (currentUser != null) ROUTE_HOME else ROUTE_LOGIN
+
         setContent {
-            BetrBetaAndroidAuthTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
-            }
+            MainUi(
+                startDestination = startDestination,
+                firebaseAuth = firebaseAuth
+            )
         }
-    }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    BetrBetaAndroidAuthTheme {
-        Greeting("Android")
     }
+
 }
