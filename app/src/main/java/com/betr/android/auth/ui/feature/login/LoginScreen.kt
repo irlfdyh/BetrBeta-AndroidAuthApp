@@ -2,10 +2,10 @@ package com.betr.android.auth.ui.feature.login
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import com.betr.android.auth.R
 import com.betr.android.auth.entity.AuthRequest
 import com.betr.android.auth.ui.MainUiState
+import com.betr.android.auth.util.buildSenderRequest
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.BeginSignInResult
 import com.google.android.gms.auth.api.identity.Identity
@@ -66,23 +67,22 @@ fun LoginScreen(
         contract = ActivityResultContracts.StartIntentSenderForResult(),
         onResult = { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val credential = oneTapClient.getSignInCredentialFromIntent(result.data)
-                val idToken = credential.googleIdToken
-                if (idToken != null) {
-                    val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
-                    auth.signInWithCredential(firebaseCredential)
-                        .addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                onNavigateToHome()
-                            } else {
-                                Toast.makeText(
-                                    context,
-                                    task.exception?.message ?: "Login Failed",
-                                    Toast.LENGTH_SHORT,
-                                ).show()
-                            }
+                handleSignInResult(
+                    auth = auth,
+                    oneTapClient = oneTapClient,
+                    data = result.data,
+                    onComplete = { task ->
+                        if (task.isSuccessful) {
+                            onNavigateToHome()
+                        } else {
+                            Toast.makeText(
+                                context,
+                                task.exception?.message ?: "Login Failed",
+                                Toast.LENGTH_SHORT,
+                            ).show()
                         }
-                }
+                    }
+                )
             }
         }
     )
@@ -110,13 +110,7 @@ fun LoginScreen(
                 context = context,
                 oneTapClient = oneTapClient
             ) { signInResult ->
-                val creatorPackage = signInResult.pendingIntent.creatorPackage
-                val intentSenderRequest = IntentSenderRequest
-                    .Builder(signInResult.pendingIntent.intentSender)
-                    .build()
-                Log.i("Login Screen", creatorPackage ?: "Unknown")
-                signInLauncher.launch(intentSenderRequest)
-
+                signInLauncher.launch(signInResult.buildSenderRequest())
             }
         },
         onRegisterAction = onNavigateToRegister
@@ -274,5 +268,21 @@ private fun loginWithGoogle(
         .addOnFailureListener { exception ->
             exception.message?.let { Log.e("Login Screen", it) }
         }
+}
 
+private fun handleSignInResult(
+    auth: FirebaseAuth,
+    oneTapClient: SignInClient,
+    data: Intent?,
+    onComplete: (Task<AuthResult>) -> Unit
+) {
+    val credential = oneTapClient.getSignInCredentialFromIntent(data)
+    val idToken = credential.googleIdToken
+    if (idToken != null) {
+        val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(firebaseCredential)
+            .addOnCompleteListener { task ->
+                onComplete(task)
+            }
+    }
 }
